@@ -1,0 +1,309 @@
+# **REST API Kawan-bayar**
+
+Backend Kawan bayar yang menggunakan laravel 10. Untuk mengakses api nya gunakan authentikasi bearer token. Test on postman.
+
+URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-olah layanan tersebut berjalan pada 'http://localhost:3000/'.
+
+## Tech Stack
+
+**Language:** PHP 8.2\
+**Server:** Laravel \
+**Framework:** Laravel 10 \
+**ORM:** Elaquent \
+**Database:** Mysql
+
+## API Structure
+
+### Spek API
+
+| Routes                     | HTTP | Deskrips                | Dibuat | Hasil Test |
+| -------------------------- | ---- | ----------------------- | ------ | ---------- |
+| `/api/login`               | POST | signin                  | Ya     | Ya         |
+| `/api/register`            | POST | signup                  | Ya     | Ya         |
+| `/api/user/profile`        | GET  | user profile            | Ya     | Ya         |
+| `/api/user/update-profile` | PUT  | user update profile     | Ya     | Ya         |
+| `/api/user/update-pin`     | PUT  | Update pin              | Ya     | Ya         |
+| `/api/transfer`            | POST | Transfer ke sesama user | Ya     | Ya         |
+
+## Auth Endpoints
+
+Endpoint untuk authentikasi:
+
+### Login
+
+Path : `/login` \
+Method : `POST`
+
+#### endpoint
+
+```
+curl http://localhost:8000/login
+```
+
+Request dari client (json)
+
+```
+{
+  "email" : "fuad_updated@gmail.com",
+  "password" : "newpassword123"
+}
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "id": 1,
+    "name": "Fuad G. Updated",
+    "email": "fuad_updated@gmail.com",
+    "username": "fuadgrimaldi",
+    "verified": 1,
+    "profile_picture": "",
+    "ktp": "",
+    "created_at": "2025-05-01T20:11:08.000000Z",
+    "updated_at": "2025-05-03T13:27:13.000000Z",
+    "balance": 20000,
+    "card_number": "91232939213",
+    "pin": "111122",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ2MjgxNjEzLCJleHAiOjE3NDYyODUyMTMsIm5iZiI6MTc0NjI4MTYxMywianRpIjoiZkJMM3Ewc2hSelpFVGc1VyIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.w5J8NdreZLwFh62cArC22mZ2E4Emz6CPCtcJsm8H0Ro",
+    "token_expires_in": 3600,
+    "token_type": "bearer"
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` atau `404 Email not found `
+
+### Register
+
+Register otomatis membuat card_number wallet dengan saldo 0
+
+Path : `/register` \
+Method : `POST`
+
+#### endpoint
+
+```
+curl http://localhost:8000/register
+```
+
+Request dari client (json)
+
+```
+{
+  "name": "Asep",
+  "email": "asep@example.com",
+  "password": "password123",
+  "pin": "121212"
+}
+```
+
+#### Successful Responses
+
+Code : `201 Created` \
+Content examples
+
+```json
+{
+    "id": 6,
+    "name": "Asep",
+    "email": "asep@example.com",
+    "username": "Asep",
+    "verified": 0,
+    "profile_picture": "",
+    "ktp": "",
+    "created_at": "2025-05-03T13:48:11.000000Z",
+    "updated_at": "2025-05-03T13:48:11.000000Z",
+    "balance": 0,
+    "card_number": "9705481146037640",
+    "pin": "121212",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzQ2MjgwMDkyLCJleHAiOjE3NDYyODM2OTIsIm5iZiI6MTc0NjI4MDA5MiwianRpIjoicDN4cUNFWFp6d2pwS292QSIsInN1YiI6IjYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ueN5a-hRiLjDe95wjWf78fJ5mr3Z25fcyH8BnFOOGIk",
+    "token_expires_in": 3600,
+    "token_type": "bearer"
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error`
+
+### Get User Profil
+
+tidak ada params id karena berdasarkan yang login
+
+Path : `/user/profile` \
+Method : `GET`
+
+#### Request
+
+```
+curl http://localhost:8000/api/user/profile
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "User retrieved successfully"
+    },
+    "data": {
+        "id": 1,
+        "email": "fuad_updated@gmail.com",
+        "name": "Fuad G. Updated",
+        "username": "fuadgrimaldi",
+        "verified": 1,
+        "profile_picture": null,
+        "ktp": null,
+        "wallet": {
+            "balance": 20000,
+            "card_number": "91232939213"
+        },
+        "created_at": "2025-05-01 20:11:08",
+        "updated_at": "2025-05-03 13:27:13"
+    }
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `404 Not found`
+
+### Update A User profile
+
+Path : `user/update-profile` \
+Method : `PUT`
+
+#### Request
+
+```
+curl http://localhost:8000/api/user/update-profile
+```
+
+This is a client request to update a user profile
+
+```json
+{
+    "name": "Fuad G. Updated",
+    "email": "fuad_updated@gmail.com",
+    "username": "fuadgrimaldi",
+    "password": "newpassword123",
+    "password_confirmation": "newpassword123"
+}
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "User updated successfully"
+    },
+    "data": {
+        "id": 1,
+        "email": "fuad_updated@gmail.com",
+        "name": "Fuad G. Updated",
+        "username": "fuadgrimaldi",
+        "verified": 1,
+        "profile_picture": null,
+        "ktp": null,
+        "created_at": "2025-05-01 20:11:08",
+        "updated_at": "2025-05-03 13:27:13"
+    }
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `400 Bad request`
+
+### Update user pin wallet
+
+Path : `user/update-pin` \
+Method : `PUT`
+
+#### Request
+
+```
+curl http://localhost:8000/api/user/update-pin
+```
+
+This is a client request to update a user profile
+
+```json
+{
+    "pin": "111111",
+    "new_pin": "111122",
+    "confirm_new_pin": "111122"
+}
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Pin wallet updated successfully"
+    },
+    "data": null
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `400 Bad request`
+
+### Transfer customer-to-customer
+
+Path : `/transfer` \
+Method : `POST`
+
+#### Request
+
+```
+curl http://localhost:8000/api/transfer
+```
+
+request dari sisi client seperti ini
+
+```json
+{
+    "amount": 10000,
+    "pin": "111122",
+    "send_to": "bel" // bisa username atau card_number tujuan
+}
+```
+
+#### Successful Responses
+
+Code : `200 Created` \
+Content examples
+
+```json
+{
+    "message": "Transfer success"
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `400 Bad request`
