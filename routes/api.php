@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TopUpController;
+use App\Http\Controllers\Api\UserCustController;
+use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\TransferController;
 use App\Http\Controllers\Api\WebHookController;
 
@@ -14,6 +16,9 @@ Route::post('webhooks',[WebHookController::class, 'update']);
 
 //harus menyertakan bearer token
 Route::group(['middleware' => 'jwt.verify'], function($router) {
+    Route::get('user/profile',[UserCustController::class, 'show']);
+    Route::put('user/update-profile',[UserCustController::class, 'update']);
+    Route::put('user/update-pin',[WalletController::class, 'updatePin']);
     Route::post('top_ups', [TopUpController::class, 'store']);
     Route::post('transfers', [TransferController::class, 'store']);
 });
