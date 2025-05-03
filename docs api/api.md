@@ -2,7 +2,7 @@
 
 Backend Kawan bayar yang menggunakan laravel 10. Untuk mengakses api nya gunakan authentikasi bearer token. Test on postman.
 
-URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-olah layanan tersebut berjalan pada 'http://localhost:3000/'.
+URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-olah layanan tersebut berjalan pada 'http://localhost:8000/'.
 
 ## Tech Stack
 
