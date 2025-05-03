@@ -12,6 +12,11 @@ URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-ol
 **ORM:** Elaquent \
 **Database:** Mysql
 
+## Filament for admin (Finish)
+![Screenshot 2025-05-03 220703](https://github.com/user-attachments/assets/3e34de96-eff9-4bf3-aa19-1c8e461eea19)
+![Screenshot 2025-05-03 220740](https://github.com/user-attachments/assets/67d69551-e896-49c6-a091-bc732a434842)
+
+
 ## API Structure
 
 ### Spek API
