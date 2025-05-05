@@ -21,6 +21,8 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::put('user/update-profile',[UserCustController::class, 'update']);
     Route::put('user/update-pin',[WalletController::class, 'updatePin']);
     Route::get('user/transaction-history',[TransactionsController::class, 'showAllTransactionsByUser']);
+    Route::get('user/transaction-history/search',[TransactionsController::class, 'searchTransactionByCode']);
+    Route::get('user/transfers-history', [TransferController::class, 'showAllTransferHistory']);
     Route::post('top_ups', [TopUpController::class, 'store']);
     Route::post('transfers', [TransferController::class, 'store']);
 });

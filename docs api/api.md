@@ -21,15 +21,18 @@ URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-ol
 
 ### Spek API
 
-| Routes                          | HTTP | Deskrips                                  | Dibuat | Hasil Test |
-| ------------------------------- | ---- | ----------------------------------------- | ------ | ---------- |
-| `/api/login`                    | POST | signin                                    | Ya     | Ya         |
-| `/api/register`                 | POST | signup                                    | Ya     | Ya         |
-| `/api/user/profile`             | GET  | user profile                              | Ya     | Ya         |
-| `/api/user/update-profile`      | PUT  | user update profile                       | Ya     | Ya         |
-| `/api/user/update-pin`          | PUT  | Update pin                                | Ya     | Ya         |
-| `/api/transfer`                 | POST | Transfer ke sesama user                   | Ya     | Ya         |
-| `/api/user/transaction-history` | GET  | Melihat segala transaksi berdasarkan user | Ya     | Ya         |
+| Routes                                 | HTTP | Deskrips                                    | Dibuat | Hasil Test |
+| -------------------------------------- | ---- | ------------------------------------------- | ------ | ---------- |
+| `/api/login`                           | POST | signin                                      | Ya     | Ya         |
+| `/api/register`                        | POST | signup                                      | Ya     | Ya         |
+| `/api/user/profile`                    | GET  | user profile                                | Ya     | Ya         |
+| `/api/user/update-profile`             | PUT  | user update profile                         | Ya     | Ya         |
+| `/api/user/update-pin`                 | PUT  | Update pin                                  | Ya     | Ya         |
+| `/api/transfer`                        | POST | Transfer ke sesama user                     | Ya     | Ya         |
+| `/api/top_ups`                         | POST | Top up melalui midtrans                     | Ya     | Ya         |
+| `/api/user/transaction-history`        | GET  | Melihat segala transaksi berdasarkan user   | Ya     | Ya         |
+| `/api/user/transaction-history/search` | GET  | seacrh transaksi berdasarkan login dan kode | Ya     | Ya         |
+| `/api/user/transfer-history`           | GET  | Melihat segala transaksi berdasarkan user   | Ya     | Ya         |
 
 ## Auth Endpoints
 
@@ -314,6 +317,47 @@ Content examples
 
 Code : `500 Internal Server Error` or `400 Bad request`
 
+### Top Ups
+
+Deskripsi lengkap [klik](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%20api/API%20MIDTRANS/readme.md)
+
+Path : `/Top Up` \
+Method : `POST`
+
+#### Request
+
+```
+curl http://localhost:8000/api/top_ups
+```
+
+request dari sisi client seperti ini
+
+```json
+{
+    "amount": 15000,
+    "pin": "111122",
+    "payment_method_code": "bni_va"
+}
+```
+
+#### Successful Responses
+
+Code : `200 Created` \
+Content examples
+
+```json
+{
+    "success": false,
+    "message": "Transaksi berhasil dibuat",
+    "redirect_url": "https://app.sandbox.midtrans.com/snap/v4/redirection/95b7dca4-8c3a-406e-b198-65e17978da6a",
+    "snap_token": "95b7dca4-8c3a-406e-b198-65e17978da6a"
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `400 Bad request`
+
 ### Get Transaction by User Login
 
 tidak ada params id karena berdasarkan yang login
@@ -387,6 +431,131 @@ Content examples
             "description": "Receive funds tofuadgrimaldi",
             "status": "success",
             "transaction_date": "2025-05-03 14:14:25"
+        }
+    ]
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `404 Not found`
+
+### Get Transaction by User Login seacrh kode
+
+tidak ada params id karena berdasarkan yang login
+
+Path : `/user/transaction-history/search` \
+Method : `GET`
+Params : `transaction_code`
+
+#### Request
+
+```
+http://localhost:8000/api/user/transaction-history/search?transaction_code=NVXCOETLVB
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Transaction retrieved successfully"
+    },
+    "data": {
+        "id": 2,
+        "user": {
+            "email": "bel@gmail.com",
+            "name": "Abelz",
+            "username": "bel"
+        },
+        "transaction_type": {
+            "name": "Receive",
+            "code": "receive"
+        },
+        "payment_method": {
+            "name": "Bank BCA",
+            "code": "bca_va"
+        },
+        "product": {
+            "name": "ciki",
+            "description": "ciki berhadiah",
+            "price": 10000
+        },
+        "amount": 10000,
+        "transaction_code": "NVXCOETLVB",
+        "description": "Receive funds toadmin",
+        "status": "success",
+        "transaction_date": "2025-05-02 05:29:54"
+    }
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `404 Not found`
+
+### Get Transfer by User Login
+
+tidak ada params id karena berdasarkan yang login
+
+Path : `/user/transfer-history` \
+Method : `GET`
+
+#### Request
+
+```
+curl http://localhost:8000/api/user/transfers-history
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "All transfer history retrieved successfully"
+    },
+    "data": [
+        {
+            "id": 1,
+            "sender_id": 1,
+            "receiver_id": 3,
+            "transaction_code": "NVXCOETLVB",
+            "created_at": "2025-05-02T05:29:54.000000Z",
+            "updated_at": "2025-05-02T05:29:54.000000Z",
+            "sender": {
+                "id": 1,
+                "username": "fuadgrimaldi"
+            },
+            "receiver": {
+                "id": 3,
+                "username": "bel"
+            }
+        },
+        {
+            "id": 3,
+            "sender_id": 1,
+            "receiver_id": 3,
+            "transaction_code": "0M0IW2PKLF",
+            "created_at": "2025-05-03T14:14:25.000000Z",
+            "updated_at": "2025-05-03T14:14:25.000000Z",
+            "sender": {
+                "id": 1,
+                "username": "fuadgrimaldi"
+            },
+            "receiver": {
+                "id": 3,
+                "username": "bel"
+            }
         }
     ]
 }

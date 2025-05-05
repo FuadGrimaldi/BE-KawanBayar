@@ -34,4 +34,39 @@ class TransactionsController extends Controller
             return ResponseCostum::error(null, 'An error occurred: ' . $th->getMessage(), 500);
         }
     }
+    public function searchTransactionByCode(Request $request)
+    {
+        try {
+            $user = auth()->user(); // Autentikasi via middleware
+
+            if (!$user) {
+                return ResponseCostum::error(null, 'User not found', 404);
+            }
+
+            // Validasi request
+            $request->validate([
+                'transaction_code' => 'required|string',
+            ]);
+
+            $transactionCode = $request->transaction_code;
+
+            // Ambil transaksi berdasarkan kode dan user login
+            $transaction = Transaction::where('user_id', $user->id)
+                ->where('transaction_code', $transactionCode)
+                ->first();
+
+            if (!$transaction) {
+                return ResponseCostum::error(null, 'Transaction not found', 404);
+            }
+
+            return ResponseCostum::success(new TransactionResource($transaction), 'Transaction retrieved successfully', 200);
+
+        } catch (\Throwable $th) {
+            Log::channel('daily')->error('Error in searchTransactionByCode: ' . $th->getMessage(), [
+                'exception' => $th,
+            ]);
+            return ResponseCostum::error(null, 'An error occurred: ' . $th->getMessage(), 500);
+        }
+    }
+
 }

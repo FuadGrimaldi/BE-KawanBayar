@@ -13,6 +13,8 @@ use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\ResponseCostum;
+use Illuminate\Support\Facades\Log;
 
 class TransferController extends Controller
 {
@@ -102,5 +104,29 @@ class TransferController extends Controller
             return response()->json(['message' => $th->getMessage()],500);
         }
 
+    }
+
+    public function showAllTransferHistory() {
+        try {
+            $user = auth()->user();
+            if (!$user) {
+                return ResponseCostum::error(null, 'User not found', 404);
+            }
+            $transferHistory = TransferHistory::where('sender_id', $user->id)
+                ->orWhere('receiver_id', $user->id)
+                ->with(['sender:id,username','receiver:id,username'])
+                ->get();
+
+            if ($transferHistory->isEmpty()) {
+                return ResponseCostum::error(null, 'No transfer history found', 404);
+            }
+
+            return ResponseCostum::success($transferHistory, 'All transfer history retrieved successfully', 200);
+        } catch (\Throwable $th) {
+            Log::channel('daily')->error('Error in showAllTransferHistory: ' . $th->getMessage(), [
+                'exception' => $th,
+            ]);
+            return ResponseCostum::error(null, 'An error occurred: ' . $th->getMessage(), 500);
+        }
     }
 }
