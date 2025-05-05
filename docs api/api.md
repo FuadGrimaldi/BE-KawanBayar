@@ -140,6 +140,8 @@ Content examples
 
 Code : `500 Internal Server Error`
 
+## User Endpoints
+
 ### Get User Profil
 
 tidak ada params id karena berdasarkan yang login
