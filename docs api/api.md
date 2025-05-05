@@ -13,22 +13,23 @@ URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-ol
 **Database:** Mysql
 
 ## Filament for admin (Finish)
+
 ![Screenshot 2025-05-03 220703](https://github.com/user-attachments/assets/3e34de96-eff9-4bf3-aa19-1c8e461eea19)
 ![Screenshot 2025-05-03 220740](https://github.com/user-attachments/assets/67d69551-e896-49c6-a091-bc732a434842)
-
 
 ## API Structure
 
 ### Spek API
 
-| Routes                     | HTTP | Deskrips                | Dibuat | Hasil Test |
-| -------------------------- | ---- | ----------------------- | ------ | ---------- |
-| `/api/login`               | POST | signin                  | Ya     | Ya         |
-| `/api/register`            | POST | signup                  | Ya     | Ya         |
-| `/api/user/profile`        | GET  | user profile            | Ya     | Ya         |
-| `/api/user/update-profile` | PUT  | user update profile     | Ya     | Ya         |
-| `/api/user/update-pin`     | PUT  | Update pin              | Ya     | Ya         |
-| `/api/transfer`            | POST | Transfer ke sesama user | Ya     | Ya         |
+| Routes                          | HTTP | Deskrips                                  | Dibuat | Hasil Test |
+| ------------------------------- | ---- | ----------------------------------------- | ------ | ---------- |
+| `/api/login`                    | POST | signin                                    | Ya     | Ya         |
+| `/api/register`                 | POST | signup                                    | Ya     | Ya         |
+| `/api/user/profile`             | GET  | user profile                              | Ya     | Ya         |
+| `/api/user/update-profile`      | PUT  | user update profile                       | Ya     | Ya         |
+| `/api/user/update-pin`          | PUT  | Update pin                                | Ya     | Ya         |
+| `/api/transfer`                 | POST | Transfer ke sesama user                   | Ya     | Ya         |
+| `/api/user/transaction-history` | GET  | Melihat segala transaksi berdasarkan user | Ya     | Ya         |
 
 ## Auth Endpoints
 
@@ -312,3 +313,85 @@ Content examples
 #### Error Responses
 
 Code : `500 Internal Server Error` or `400 Bad request`
+
+### Get Transaction by User Login
+
+tidak ada params id karena berdasarkan yang login
+
+Path : `/user/transaction-history` \
+Method : `GET`
+
+#### Request
+
+```
+curl http://localhost:8000/api/user/transaction-history
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "All transactions retrieved successfully"
+    },
+    "data": [
+        {
+            "id": 2,
+            "user": {
+                "email": "bel@gmail.com",
+                "name": "Abelz",
+                "username": "bel"
+            },
+            "transaction_type": {
+                "name": "Receive",
+                "code": "receive"
+            },
+            "payment_method": {
+                "name": "Bank BCA",
+                "code": "bca_va"
+            },
+            "product": {
+                "name": "ciki",
+                "description": "ciki berhadiah",
+                "price": 10000
+            },
+            "amount": 10000,
+            "transaction_code": "NVXCOETLVB",
+            "description": "Receive funds toadmin",
+            "status": "success",
+            "transaction_date": "2025-05-02 05:29:54"
+        },
+        {
+            "id": 21,
+            "user": {
+                "email": "bel@gmail.com",
+                "name": "Abelz",
+                "username": "bel"
+            },
+            "transaction_type": {
+                "name": "Receive",
+                "code": "receive"
+            },
+            "payment_method": {
+                "name": "Bank BCA",
+                "code": "bca_va"
+            },
+            "product": null,
+            "amount": 10000,
+            "transaction_code": "0M0IW2PKLF",
+            "description": "Receive funds tofuadgrimaldi",
+            "status": "success",
+            "transaction_date": "2025-05-03 14:14:25"
+        }
+    ]
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error` or `404 Not found`

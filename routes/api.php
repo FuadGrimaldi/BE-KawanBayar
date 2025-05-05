@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserCustController;
 use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\TransferController;
 use App\Http\Controllers\Api\WebHookController;
+use App\Http\Controllers\Api\TransactionsController;
 
 Route::post('register',[AuthController::class, 'register']);
 Route::post('login',[AuthController::class, 'login']);
@@ -19,6 +20,7 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::get('user/profile',[UserCustController::class, 'show']);
     Route::put('user/update-profile',[UserCustController::class, 'update']);
     Route::put('user/update-pin',[WalletController::class, 'updatePin']);
+    Route::get('user/transaction-history',[TransactionsController::class, 'showAllTransactionsByUser']);
     Route::post('top_ups', [TopUpController::class, 'store']);
     Route::post('transfers', [TransferController::class, 'store']);
 });
