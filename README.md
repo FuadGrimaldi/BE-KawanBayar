@@ -1,6 +1,7 @@
 # Developing a Seamless E-Wallet API with Laravel and Midtrans Payment Integration
 
 Docs API -> [HERE](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%20api/api.md)
+Docs cara kerja midtrans -> [HERE](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%20api/API%20MIDTRANS/readme.md)
 
 ### Introduction:
 
