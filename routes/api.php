@@ -24,7 +24,7 @@ Route::get('internet/{provider}', [InternetController::class, 'showDataPlanByPro
 //harus menyertakan bearer token
 Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::get('user/profile',[UserCustController::class, 'show']);
-    Route::put('user/update-profile',[UserCustController::class, 'update']);
+    Route::put('user/update-profile',[UserCustController::class, 'updateProfile']);
     Route::put('user/update-pin',[WalletController::class, 'updatePin']);
     Route::get('user/transaction-history',[TransactionsController::class, 'showAllTransactionsByUser']);
     Route::get('user/transaction-history/search',[TransactionsController::class, 'searchTransactionByCode']);

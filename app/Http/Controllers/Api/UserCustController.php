@@ -13,6 +13,37 @@ use Illuminate\Support\Facades\Hash;
 
 class UserCustController extends Controller
 {
+    public function updateProfile(Request $request)
+    {
+        try {
+            $user = auth()->user(); // dari middleware jwt.verify
+            if (!$user) {
+                return ResponseCostum::error(null, 'User not found', 404);
+            }
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+                'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+                'phone_number' => 'nullable|string|max:15',
+            ]);
+
+            // Update user profile
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->phone_number = $request->phone_number;
+
+            $user->save();
+
+            return ResponseCostum::success(new UserResource($user), 'Profile updated successfully', 200);
+        } catch (\Exception $e) {
+            Log::channel('daily')->error('Error in updateProfile: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+            return ResponseCostum::error(null, 'An error occurred: ' . $e->getMessage(), 500);
+        }
+    }
 
     /**
      * Display a listing of the resource.
@@ -70,31 +101,8 @@ class UserCustController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UserUpdateRequest $request)
-    {
-        try {
-            $user = auth()->user(); // Ambil user dari token JWT
-
-            if (!$user) {
-                return ResponseCostum::error(null, 'User not found', 404);
-            }
-
-            $data = $request->validated();
-
-            // Hash password sebelum disimpan
-            if (isset($data['password'])) {
-                $data['password'] = Hash::make($data['password']);
-            }
-
-            $user->update($data);
-
-            return ResponseCostum::success(new UserResource($user), 'User updated successfully', 200);
-        } catch (\Exception $e) {
-            Log::channel('daily')->error('Error in update: ' . $e->getMessage(), [
-                'exception' => $e,
-            ]);
-
-            return ResponseCostum::error(null, 'An error occurred: ' . $e->getMessage(), 500);
-        }
+    { 
+        //
     }
 
 

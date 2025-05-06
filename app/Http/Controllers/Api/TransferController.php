@@ -115,14 +115,14 @@ class TransferController extends Controller
             }
             $transferHistory = TransferHistory::where('sender_id', $user->id)
                 ->orWhere('receiver_id', $user->id)
-                ->with(['sender:id,username','receiver:id,username'])
+                ->with(['sender:id,username,email','receiver:id,username,email'])
                 ->get();
 
             if ($transferHistory->isEmpty()) {
                 return ResponseCostum::error(null, 'No transfer history found', 404);
             }
 
-            return ResponseCostum::success(new TransferHistoryResource($transferHistory), 'All transfer history retrieved successfully', 200);
+            return ResponseCostum::success(TransferHistoryResource::collection($transferHistory), 'All transfer history retrieved successfully', 200);
         } catch (\Throwable $th) {
             Log::channel('daily')->error('Error in showAllTransferHistory: ' . $th->getMessage(), [
                 'exception' => $th,

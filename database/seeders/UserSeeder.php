@@ -20,14 +20,15 @@ class UserSeeder extends Seeder
             'phone_number' => null,
             'verified' => true,
         ]);
-        // User::create([
-        //     'name' => 'Abelz',
-        //     'email' => 'bel@gmail.com',
-        //     'password' => Hash::make('12345678'), // Pastikan password di-hash
-        //     'username' => 'bel',
-        //     'profile_picture' => null,
-        //     'ktp' => null,
-        //     'verified' => true,
-        // ]);
+        User::create([
+            'name' => 'Abelz',
+            'email' => 'bel@gmail.com',
+            'password' => Hash::make('12345678'), // Pastikan password di-hash
+            'username' => 'bel',
+            'profile_picture' => null,
+            'ktp' => null,
+            'phone_number' => null,
+            'verified' => true,
+        ]);
     }
 }

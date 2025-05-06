@@ -19,5 +19,11 @@ class WalletSeeder extends Seeder
             'pin'=> '123456',   
             'card_number' => '1234567890123456',
         ]);
+        Wallet::create([
+            'user_id' => 2,
+            'balance' => 100000,
+            'pin'=> '123456',   
+            'card_number' => '899231232123212',
+        ]);
     }
 }
