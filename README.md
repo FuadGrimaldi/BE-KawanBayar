@@ -4,6 +4,8 @@ Docs API -> [HERE](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%
 
 Docs cara kerja midtrans -> [HERE](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%20api/API%20MIDTRANS/readme.md)
 
+Docs Database -> [HERE](https://github.com/FuadGrimaldi/BE-KawanBayar/blob/main/docs%20api/DOCS%20DB/readme.md)
+
 ### Introduction:
 
 Create a robust E-Wallet API using Laravel, integrating Midtrans Payment for secure and efficient transactions. This API will encompass essential functions such as transfers, top-ups, and middleware for enhanced security. Additionally, implement web hooks to facilitate seamless testing of Midtrans API integration.
