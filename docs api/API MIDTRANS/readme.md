@@ -1,4 +1,5 @@
-# INI CARA KERJA BACKEND MIDTRANS 
+# INI CARA KERJA BACKEND MIDTRANS
+
 Webhook digunakan untuk update status transaksi setelah pembayaran midtrans berhasil.
 
 endpoint webhook : http://<harus public/ngrok>/api/webhooks
@@ -34,6 +35,41 @@ response :
 }
 ```
 
+## Payment Internet with VA/GOPAY SNAP (2)
+
+siapin postman sama ngrok
+
+endpoint : http://localhost:8000/api/internet-payment
+
+untuk request diperlukan login terlebih dahulu dengan auth=bearer <token>
+
+request :
+
+```
+{
+    "amount" : 15000,
+    "pin" : "111122",
+    "payment_method_code" : "bni_va",
+    "data_plan_id" : 1
+}
+```
+
+response :
+
+```
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Payment initiated via Midtrans"
+    },
+    "data": {
+        "redirect_url": "https://app.sandbox.midtrans.com/snap/v4/redirection/1dc371d6-60c0-49a2-9c6c-68a6693da5f7",
+        "snap_token": "1dc371d6-60c0-49a2-9c6c-68a6693da5f7"
+    }
+}
+```
+
 #### Ambil redirect_url nya agar terbuka otomatis di browser
 
 https://app.sandbox.midtrans.com/snap/v4/redirection/ed8034db-765b-4075-9e90-8877278d5c4d
@@ -45,6 +81,7 @@ https://simulator.sandbox.midtrans.com/
 ![Screenshot 2025-05-05 172837](https://github.com/user-attachments/assets/787b1042-dc0c-439f-bd0b-c18d06bd3fca)
 
 #### jika sudah beres di simulatornya, maka link snap tadi otomati berubah menjadi succes (status)
+
 ![Screenshot 2025-05-05 172858](https://github.com/user-attachments/assets/a838d2c6-fd62-48c4-a9be-b937a4721d14)
 
 #### jika success maka api/webhooks akan merespon dan mengganti transaksi bagian status pending menjadi sukses.

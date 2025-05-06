@@ -42,20 +42,24 @@ URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-ol
 
 ### Spek API USER - API Structure
 
-| Routes                                 | HTTP | Deskrips                                    | Dibuat | Hasil Test |
-| -------------------------------------- | ---- | ------------------------------------------- | ------ | ---------- |
-| `/api/login`                           | POST | signin                                      | Ya     | Ya         |
-| `/api/register`                        | POST | signup                                      | Ya     | Ya         |
-| `/api/forgot-password`                 | POST | link lupa password                          | Ya     | Ya         |
-| `/api/reset-password`                  | POST | reset password                              | Ya     | Ya         |
-| `/api/user/profile`                    | GET  | user profile                                | Ya     | Ya         |
-| `/api/user/update-profile`             | PUT  | user update profile                         | Ya     | Ya         |
-| `/api/user/update-pin`                 | PUT  | Update pin                                  | Ya     | Ya         |
-| `/api/transfer`                        | POST | Transfer ke sesama user                     | Ya     | Ya         |
-| `/api/top_ups`                         | POST | Top up melalui midtrans                     | Ya     | Ya         |
-| `/api/user/transaction-history`        | GET  | Melihat segala transaksi berdasarkan user   | Ya     | Ya         |
-| `/api/user/transaction-history/search` | GET  | seacrh transaksi berdasarkan login dan kode | Ya     | Ya         |
-| `/api/user/transfer-history`           | GET  | Melihat segala transaksi berdasarkan user   | Ya     | Ya         |
+| Routes                                 | HTTP | Deskrips                                           | Dibuat | Hasil Test |
+| -------------------------------------- | ---- | -------------------------------------------------- | ------ | ---------- |
+| `/api/login`                           | POST | signin                                             | Ya     | Ya         |
+| `/api/register`                        | POST | signup                                             | Ya     | Ya         |
+| `/api/forgot-password`                 | POST | link lupa password                                 | Ya     | Ya         |
+| `/api/reset-password`                  | POST | reset password                                     | Ya     | Ya         |
+| `/api/user/profile`                    | GET  | user profile                                       | Ya     | Ya         |
+| `/api/user/update-profile`             | PUT  | user update profile                                | Ya     | Ya         |
+| `/api/user/update-pin`                 | PUT  | Update pin                                         | Ya     | Ya         |
+| `/api/transfer`                        | POST | Transfer ke sesama user                            | Ya     | Ya         |
+| `/api/top_ups`                         | POST | Top up melalui midtrans                            | Ya     | Ya         |
+| `/api/user/transaction-history`        | GET  | Melihat segala transaksi berdasarkan user          | Ya     | Ya         |
+| `/api/user/transaction-history/search` | GET  | seacrh transaksi berdasarkan login dan kode        | Ya     | Ya         |
+| `/api/user/transfer-history`           | GET  | Melihat segala transaksi berdasarkan user          | Ya     | Ya         |
+| `/api/providers`                       | GET  | Nampilin provider misal telkomsel,tri,dll          | Ya     | Ya         |
+| `/api/internet/{provider}`             | GET  | Nampilin paket data setiap provider                | Ya     | Ya         |
+| `/api/internet-payment`                | POST | Bayar internet bisa pake midtrans atau kawan bayar | Ya     | Ya         |
+| `/api/user/internet-history`           | GET  | Nampilin history transaksi internet                | Ya     | Ya         |
 
 ## Auth Endpoints
 
