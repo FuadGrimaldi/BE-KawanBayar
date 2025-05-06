@@ -9,10 +9,13 @@ use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\TransferController;
 use App\Http\Controllers\Api\WebHookController;
 use App\Http\Controllers\Api\TransactionsController;
+use App\Http\Controllers\Api\PasswordResetController;
 
 Route::post('register',[AuthController::class, 'register']);
 Route::post('login',[AuthController::class, 'login']);
 Route::post('webhooks',[WebHookController::class, 'update']);
+Route::post('forgot-password', [PasswordResetController::class, 'forgotPassword']);
+Route::post('reset-password', [PasswordResetController::class, 'resetPassword']);
 
 
 //harus menyertakan bearer token

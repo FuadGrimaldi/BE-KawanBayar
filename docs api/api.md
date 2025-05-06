@@ -10,21 +10,44 @@ URL lengkap diberikan dalam respons, respons tersebut akan ditampilkan seolah-ol
 **Server:** Laravel \
 **Framework:** Laravel 10 \
 **ORM:** Elaquent \
-**Database:** Mysql
+**Database:** Mysql \
+**Service:**
 
-## Filament for admin (Finish)
+-   mailtrap
+-   midtrans
+
+## Akses Admin
+
+### Filament for admin (Finish)
 
 ![Screenshot 2025-05-03 220703](https://github.com/user-attachments/assets/3e34de96-eff9-4bf3-aa19-1c8e461eea19)
 ![Screenshot 2025-05-03 220740](https://github.com/user-attachments/assets/67d69551-e896-49c6-a091-bc732a434842)
 
-## API Structure
+### Hak Akses
 
-### Spek API
+### Tabel Hak Akses Admin
+
+| No  | Modul / Fitur            | Deskripsi Akses                                | Hasil Pengujian |
+| --- | ------------------------ | ---------------------------------------------- | --------------- |
+| 1   | Sign In                  | Admin dapat masuk ke dalam sistem              | ✅ Lulus        |
+| 2   | Manajemen Payment Method | Tambah, ubah, dan hapus data metode pembayaran | ✅ Lulus        |
+| 3   | Manajemen Operator Kartu | Kelola data operator kartu                     | ✅ Lulus        |
+| 4   | Manajemen Tipe Transaksi | Kelola data jenis/tipe transaksi               | ✅ Lulus        |
+| 5   | Manajemen Pengguna       | Tambah, ubah, dan hapus data pengguna          | ✅ Lulus        |
+| 6   | Manajemen Produk         | Kelola data produk (CRUD)                      | ✅ Lulus        |
+| 7   | Manajemen Transaksi      | Melihat dan memproses data transaksi           | ✅ Lulus        |
+| 8   | Laporan Transfer         | Melihat laporan transfer dan data lainnya      | ✅ Lulus        |
+
+## Akses User
+
+### Spek API USER - API Structure
 
 | Routes                                 | HTTP | Deskrips                                    | Dibuat | Hasil Test |
 | -------------------------------------- | ---- | ------------------------------------------- | ------ | ---------- |
 | `/api/login`                           | POST | signin                                      | Ya     | Ya         |
 | `/api/register`                        | POST | signup                                      | Ya     | Ya         |
+| `/api/forgot-password`                 | POST | link lupa password                          | Ya     | Ya         |
+| `/api/reset-password`                  | POST | reset password                              | Ya     | Ya         |
 | `/api/user/profile`                    | GET  | user profile                                | Ya     | Ya         |
 | `/api/user/update-profile`             | PUT  | user update profile                         | Ya     | Ya         |
 | `/api/user/update-pin`                 | PUT  | Update pin                                  | Ya     | Ya         |
@@ -133,6 +156,91 @@ Content examples
     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzQ2MjgwMDkyLCJleHAiOjE3NDYyODM2OTIsIm5iZiI6MTc0NjI4MDA5MiwianRpIjoicDN4cUNFWFp6d2pwS292QSIsInN1YiI6IjYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ueN5a-hRiLjDe95wjWf78fJ5mr3Z25fcyH8BnFOOGIk",
     "token_expires_in": 3600,
     "token_type": "bearer"
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error`
+
+### Reset Password
+
+Reset password kalo udah lupa
+
+Path : `/reset-password` \
+Method : `POST`
+
+#### endpoint
+
+```
+curl http://localhost:8000/reset-password
+```
+
+Request dari client (json)
+
+```
+{
+  "token": "d3c878ec6971dbdee859f7301a14673c9639838e66122651d79546704695a943",
+  "email": "fuadgrimaldi145@gmail.com",
+  "password": "12345678",
+  "password_confirmation": "12345678"
+}
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "Your password has been reset."
+    },
+    "data": null
+}
+```
+
+#### Error Responses
+
+Code : `500 Internal Server Error`
+
+### Forgot-Password
+
+Fitur kalo lupa password
+
+Path : `/forgot-password` \
+Method : `POST`
+
+#### endpoint
+
+```
+curl http://localhost:8000/forgot-password
+```
+
+Request dari client (json)
+
+```
+{
+  "email": "fuadgrimaldi123@gmail.com"
+}
+```
+
+#### Successful Responses
+
+Code : `200 OK` \
+Content examples
+
+```json
+{
+    "meta": {
+        "code": 200,
+        "status": "success",
+        "message": "We have emailed your password reset link."
+    },
+    "data": null
 }
 ```
 
