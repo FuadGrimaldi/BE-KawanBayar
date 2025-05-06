@@ -29,7 +29,7 @@ class OperatorCardResource extends Resource
                     ->label('Name')
                     ->required()
                     ->maxLength(100),
-                Forms\Components\TextInput::make('thumbnail')
+                Forms\Components\TextInput::make('thumbail')
                     ->label('Thumbnail')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('status')
@@ -44,7 +44,7 @@ class OperatorCardResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Name')->searchable(),
-                Tables\Columns\TextColumn::make('thumbnail')->label('Thumbnail'),
+                Tables\Columns\TextColumn::make('thumbail')->label('Thumbnail'),
                 Tables\Columns\TextColumn::make('status')->label('Status'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->label('Created At'),
             ])
