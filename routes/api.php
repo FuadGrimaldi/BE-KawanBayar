@@ -17,8 +17,8 @@ Route::post('login',[AuthController::class, 'login']);
 Route::post('webhooks',[WebHookController::class, 'update']);
 Route::post('forgot-password', [PasswordResetController::class, 'forgotPassword']);
 Route::post('reset-password', [PasswordResetController::class, 'resetPassword']);
-Route::get('providers', [InternetController::class, 'showAllProviders']);
-Route::get('internet/{provider}', [InternetController::class, 'showDataPlanByProvider']);
+Route::get('providers', [InternetController::class, 'showAllProviders']); // baru
+Route::get('internet/{provider}', [InternetController::class, 'showDataPlanByProvider']); //baru
 
 
 //harus menyertakan bearer token
@@ -31,6 +31,9 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::get('user/transfers-history', [TransferController::class, 'showAllTransferHistory']);
     Route::post('top_ups', [TopUpController::class, 'store']);
     Route::post('transfers', [TransferController::class, 'store']);
+    Route::post('internet-payment', [InternetController::class, 'paymentInternet']); // baru
+    Route::get('user/internet-history', [InternetController::class, 'showAllInternetHistory']); // baru
+
 });
 
 

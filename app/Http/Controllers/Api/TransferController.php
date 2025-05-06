@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ResponseCostum;
+use App\Http\Resources\TransferHistoryResource;
 use Illuminate\Support\Facades\Log;
 
 class TransferController extends Controller
@@ -27,8 +28,8 @@ class TransferController extends Controller
             'send_to' => 'required'
         ]);
 
-    if($validator->fails()) {
-        return response()->json(['errors' => $validator->messages()],400);
+        if($validator->fails()) {
+            return response()->json(['errors' => $validator->messages()],400);
         }
         
         $sender = auth()->user();
@@ -121,7 +122,7 @@ class TransferController extends Controller
                 return ResponseCostum::error(null, 'No transfer history found', 404);
             }
 
-            return ResponseCostum::success($transferHistory, 'All transfer history retrieved successfully', 200);
+            return ResponseCostum::success(new TransferHistoryResource($transferHistory), 'All transfer history retrieved successfully', 200);
         } catch (\Throwable $th) {
             Log::channel('daily')->error('Error in showAllTransferHistory: ' . $th->getMessage(), [
                 'exception' => $th,

@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'username' => 'fuad',
             'profile_picture' => null,
             'ktp' => null,
+            'phone_number' => null,
             'verified' => true,
         ]);
         // User::create([

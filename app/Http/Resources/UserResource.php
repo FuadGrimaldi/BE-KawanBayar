@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'verified' => $this->verified,
             'profile_picture' => $this->profile_picture,
             'ktp' => $this->ktp,
+            'phone_number' => $this->phone_number,
             'wallet' => $this->wallet ? [
                 'balance' => $this->wallet->balance,
                 'card_number' => $this->wallet->card_number,

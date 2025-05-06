@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('verified')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('ktp')->nullable();
+            $table->string('phone_number')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
